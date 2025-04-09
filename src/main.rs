@@ -1,11 +1,9 @@
 use colored::{ColoredString, Colorize};
-use rand::Rng;
 use rand::seq::IndexedRandom;
 use std::fs::File;
 use std::io;
 use std::io::Read;
 use std::path::Path;
-use std::process::exit;
 
 #[derive(Debug, Clone)]
 struct Layout {
@@ -147,8 +145,9 @@ fn main() {
 
     let mut rng = rand::rng();
     let target = layouts.choose(&mut rng).unwrap().clone();
+    let mut guesscount = 0;
     'gameloop: loop {
-        println!("\nGuess: ");
+        println!("\nGuess ({}): ", guesscount);
         let mut guess = String::new();
         io::stdin()
             .read_line(&mut guess)
@@ -163,5 +162,6 @@ fn main() {
             println!("You got it!");
             break 'gameloop;
         }
+        guesscount += 1;
     }
 }
