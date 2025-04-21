@@ -1,4 +1,3 @@
-use colored::{ColoredString, Colorize};
 use rand::seq::IndexedRandom;
 use std::fs::File;
 use std::io;
@@ -72,7 +71,7 @@ impl Layout {
         }
     }
 
-    fn determine_colour(try_char: char, try_idx: usize, try_column: &[char]) -> ColoredString {
+    fn determine_colour(try_char: char, try_idx: usize, try_column: &[char]) -> String {
         let mut try_char_idx = 44;
         for (idx, ch) in try_column.iter().enumerate() {
             if *ch == try_char {
@@ -80,12 +79,12 @@ impl Layout {
             }
         }
         if try_char_idx == 44 {
-            try_char.to_string().white()
+            try_char.to_string()
         } else {
             if try_char_idx == try_idx {
-                try_char.to_string().green()
+                format!("\x1b[32m{try_char}\x1b[0m")
             } else {
-                try_char.to_string().yellow()
+                format!("\x1b[33m{try_char}\x1b[0m")
             }
         }
     }
